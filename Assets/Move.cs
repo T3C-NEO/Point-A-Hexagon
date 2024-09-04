@@ -18,8 +18,8 @@ public class Move : MonoBehaviour
 
     int score;
 
-    int pos = 5;
-    int neg = -5;
+    int pos = 3;
+    int neg = -3;
 
      int stage = 0;
     // Start is called before the first frame update
@@ -48,7 +48,7 @@ public class Move : MonoBehaviour
             transform.Rotate(new Vector3(0, 0, rot));
         } else
         {
-            Instantiate(draw, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+            Instantiate(draw, new Vector3(transform.position.x, transform.position.y, -5), Quaternion.identity);
         }
         if (stage == 0)
         {
