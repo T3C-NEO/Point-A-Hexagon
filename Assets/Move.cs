@@ -16,6 +16,8 @@ public class Move : MonoBehaviour
     int rot;
     bool movee = false;
 
+    bool restar = false;
+
     int score;
 
     int pos = 3;
@@ -37,8 +39,28 @@ public class Move : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            rb.velocity = new Vector2((aim.transform.position.x - transform.position.x) * 2, (aim.transform.position.y - transform.position.y) * 2);
-            aim.SetActive(false);
+            if (restar == true)
+            {
+                resta();
+            } else
+            {
+                rb.velocity = new Vector2((aim.transform.position.x - transform.position.x) * 2, (aim.transform.position.y - transform.position.y) * 2);
+                aim.SetActive(false);
+            }
+            
+        }
+    }
+    void UpdateScore()
+    {
+        if (score < 10)
+        {
+            scoreTx.text = "score: 00" + score.ToString();
+        } else if (score < 100)
+        {
+            scoreTx.text = "score: 0" + score.ToString();
+        } else
+        {
+            scoreTx.text = "score: " + score.ToString();
         }
     }
     void FixedUpdate()
@@ -67,14 +89,7 @@ public class Move : MonoBehaviour
                     && (transform.position.y - sto[stage].transform.position.y) <= 1 && (transform.position.y - sto[stage].transform.position.y) >= -1)
                 {
                     score += (int)((((1- Mathf.Abs(transform.position.x - sto[stage].transform.position.x))/2)+((1 - Mathf.Abs(transform.position.y - sto[stage].transform.position.y) )/ 2))*100);
-                    if (score < 100)
-                    {
-                        scoreTx.text = "score: 0" + score.ToString();
-                    }
-                    else
-                    {
-                        scoreTx.text = "score: " + score.ToString();
-                    }
+                    UpdateScore();
                 }
                 rb.velocity = new Vector2(0, 0);
                 aim.SetActive(true);
@@ -97,14 +112,7 @@ public class Move : MonoBehaviour
                     && (transform.position.y - sto[stage].transform.position.y) <= 1 && (transform.position.y - sto[stage].transform.position.y) >= -1)
                 {
                     score += (int)((((1 - Mathf.Abs(transform.position.x - sto[stage].transform.position.x)) / 2) + ((1 - Mathf.Abs(transform.position.y - sto[stage].transform.position.y)) / 2)) * 100);
-                    if (score < 100)
-                    {
-                        scoreTx.text = "score: 0" + score.ToString();
-                    }
-                    else
-                    {
-                        scoreTx.text = "score: " + score.ToString();
-                    }
+                    UpdateScore();
                 }
                 rb.velocity = new Vector2(0, 0);
                 aim.SetActive(true);
@@ -112,6 +120,10 @@ public class Move : MonoBehaviour
             }
         } else if (stage == 2)
         {
+            if (transform.position.y < -4.5)
+            {
+                rb.velocity = rb.velocity - new Vector2(0, rb.velocity.y);
+            }
             if (transform.eulerAngles.z >= 240)
             {
                 rot = neg;
@@ -127,14 +139,7 @@ public class Move : MonoBehaviour
                     && (transform.position.y - sto[stage].transform.position.y) <= 1 && (transform.position.y - sto[stage].transform.position.y) >= -1)
                 {
                     score += (int)((((1 - Mathf.Abs(transform.position.x - sto[stage].transform.position.x)) / 2) + ((1 - Mathf.Abs(transform.position.y - sto[stage].transform.position.y)) / 2)) * 100);
-                    if (score < 100)
-                    {
-                        scoreTx.text = "score: 0" + score.ToString();
-                    }
-                    else
-                    {
-                        scoreTx.text = "score: " + score.ToString();
-                    }
+                    UpdateScore();
                 }
                 rb.velocity = new Vector2(0, 0);
                 aim.SetActive(true);
@@ -157,14 +162,7 @@ public class Move : MonoBehaviour
                     && (transform.position.y - sto[stage].transform.position.y) <= 1 && (transform.position.y - sto[stage].transform.position.y) >= -1)
                 {
                     score += (int)((((1 - Mathf.Abs(transform.position.x - sto[stage].transform.position.x)) / 2) + ((1 - Mathf.Abs(transform.position.y - sto[stage].transform.position.y)) / 2)) * 100);
-                    if (score < 100)
-                    {
-                        scoreTx.text = "score: 0" + score.ToString();
-                    }
-                    else
-                    {
-                        scoreTx.text = "score: " + score.ToString();
-                    }
+                    UpdateScore();
                 }
                 rb.velocity = new Vector2(0, 0);
                 aim.SetActive(true);
@@ -187,14 +185,7 @@ public class Move : MonoBehaviour
                     && (transform.position.y - sto[stage].transform.position.y) <= 1 && (transform.position.y - sto[stage].transform.position.y) >= -1)
                 {
                     score += (int)((((1 - Mathf.Abs(transform.position.x - sto[stage].transform.position.x)) / 2) + ((1 - Mathf.Abs(transform.position.y - sto[stage].transform.position.y)) / 2)) * 100);
-                    if (score < 100)
-                    {
-                        scoreTx.text = "score: 0" + score.ToString();
-                    }
-                    else
-                    {
-                        scoreTx.text = "score: " + score.ToString();
-                    }
+                    UpdateScore();
                 }
                 rb.velocity = new Vector2(0, 0);
                 aim.SetActive(true);
@@ -202,6 +193,10 @@ public class Move : MonoBehaviour
             }
         } else if (stage == 5)
         {
+            if (transform.position.y > 4.5)
+            {
+                rb.velocity = rb.velocity - new Vector2(0, rb.velocity.y);
+            }
             if (transform.eulerAngles.z >= 60)
             {
                 rot = neg;
@@ -222,7 +217,7 @@ public class Move : MonoBehaviour
                 final.text = "Final Score: " + score + "/600";
                 final.gameObject.SetActive(true);
 
-
+                restar = true;
 
                 stage++;
             }
