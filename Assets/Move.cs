@@ -37,6 +37,10 @@ public class Move : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKeyDown("r"))
+        {
+            resta();
+        } 
         if (Input.GetKeyDown("space"))
         {
             if (restar == true)
